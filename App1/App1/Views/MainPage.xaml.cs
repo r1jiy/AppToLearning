@@ -14,10 +14,9 @@ namespace App1
         {
             InitializeComponent();
         }
-        public int t = 1;
         public int butt;
 
-        public List<int> pool;
+        public List<int> pool = new List<int>();
 
 
         public List<int> result;
@@ -38,91 +37,116 @@ namespace App1
 
         private void Button1_Clicked(object sender, EventArgs e)
         {
-
+            inGame(1);
         }
 
         private void Button2_Clicked(object sender, EventArgs e)
         {
-
+            inGame(2);
         }
 
         private void Button3_Clicked(object sender, EventArgs e)
         {
-
+            inGame(3);
         }
 
         private void Button4_Clicked(object sender, EventArgs e)
         {
-
+            inGame(4);
         }
 
         private void Button5_Clicked(object sender, EventArgs e)
         {
             Button5.IsEnabled = false;
             start();
+
         }
 
         async void start()
         {
-            for (int i = 1; i <= t; i++)
+            if (level > 1) await Task.Delay(2000);
+            for (int i = 1; i <= level; i++)
             {
                 butt = rand.Next(1, 5);
                 switch (butt)
                 {
                     case 1:
+                        pool.Add(1);
                         Button1.BackgroundColor = Xamarin.Forms.Color.Red;
                         await Task.Delay(250);
                         Button1.BackgroundColor = Xamarin.Forms.Color.Yellow;
                         await Task.Delay(250);
-                        pool.Add(1);
                         break;
                     case 2:
+                        pool.Add(2);
                         Button2.BackgroundColor = Xamarin.Forms.Color.Red;
+
                         await Task.Delay(250);
                         Button2.BackgroundColor = Xamarin.Forms.Color.Yellow;
                         await Task.Delay(250);
-                        pool.Add(2);
                         break;
                     case 3:
+                        pool.Add(3);
                         Button3.BackgroundColor = Xamarin.Forms.Color.Red;
                         await Task.Delay(250);
                         Button3.BackgroundColor = Xamarin.Forms.Color.Yellow;
-                        await Task.Delay(250);
-                        pool.Add(3);
+                        await Task.Delay(250); ;
                         break;
                     case 4:
+                        pool.Add(4);
                         Button4.BackgroundColor = Xamarin.Forms.Color.Red;
                         await Task.Delay(250);
                         Button4.BackgroundColor = Xamarin.Forms.Color.Yellow;
                         await Task.Delay(250);
-                        pool.Add(4);
                         break;
                 }
+                ButtEn();
                 await Task.Delay(600);
-                if (i == t) Button5.IsEnabled = true;
             }
         }
 
         public void inGame(int butt)
         {
-            if (butt != pool.First())
+            if (butt == pool.First())
             {
                 if (pool.Count() > 1)
-                pool.Remove(0);
+                {
+                    pool.RemoveAt(0);
+                }
                 else
                 {
                     pool.Clear();
-
-
-
-
+                    level++;
+                    start();
                 }
             }
             else
             {
-
-
+                if (level > maxLvl) maxLvl = level - 1;
+                pool.Clear();
+                level = 1;
+                Label_result.Text = Convert.ToString(maxLvl);
+                Button5.IsEnabled = true;
+                ButtDs();
             }
+        }
+
+
+        public void ButtEn()
+        {
+            Button1.IsEnabled = true;
+            Button2.IsEnabled = true;
+            Button3.IsEnabled = true;
+            Button4.IsEnabled = true;
+        }
+
+
+        public void ButtDs()
+        {
+            Button1.IsEnabled = false;
+            Button2.IsEnabled = false;
+            Button3.IsEnabled = false;
+            Button4.IsEnabled = false;
         }
     }
 }

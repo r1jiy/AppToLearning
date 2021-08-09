@@ -15,14 +15,14 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
 
-            <Button x:Name ="Button1"  BackgroundColor="Yellow" Text="Button1" />
-            <Button x:Name ="Button2"  BackgroundColor="Yellow" Grid.Column="1" Text="Button2" />
-            <Button x:Name ="Button3"  BackgroundColor="Yellow" Grid.Row="1" Text="Button3" />
-            <Button x:Name ="Button4"  BackgroundColor="Yellow" Grid.Column="1" Grid.Row="1" Text="Button4" />
+            <Button x:Name ="Button1" IsEnabled="False"  BackgroundColor="Yellow" Text="Button1" />
+            <Button x:Name ="Button2" IsEnabled="False" BackgroundColor="Yellow" Grid.Column="1" Text="Button2" />
+            <Button x:Name ="Button3" IsEnabled="False" BackgroundColor="Yellow" Grid.Row="1" Text="Button3" />
+            <Button x:Name ="Button4" IsEnabled="False" BackgroundColor="Yellow" Grid.Column="1" Grid.Row="1" Text="Button4" />
         </Grid>
         <Grid Margin="10,100,20,20">
             <Label Text="Результат"   Grid.Column="0" TextColor="Blue"/>
-            <Label x:Name="Result" Text=""  Grid.Column="1" TextColor="Blue"/>
+            <Label x:Name="Label_result" Text=""  Grid.Column="1" TextColor="Blue"/>
             <Button x:Name ="Button5" BackgroundColor="Red" Grid.Row="2" Grid.ColumnSpan="2" Text="Начать" />
         </Grid>
     </StackLayout>
