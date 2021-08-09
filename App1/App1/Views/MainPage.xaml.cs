@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace App1
 {
@@ -33,6 +34,12 @@ namespace App1
             Button3.Clicked += Button3_Clicked;
             Button4.Clicked += Button4_Clicked;
             Button5.Clicked += Button5_Clicked;
+            Button6.Clicked += Button6_Clicked;
+        }
+
+        private void Button6_Clicked(object sender, EventArgs e)
+        {
+            Blink();
         }
 
         private void Button1_Clicked(object sender, EventArgs e)
@@ -103,6 +110,14 @@ namespace App1
                 ButtEn();
                 await Task.Delay(600);
             }
+        }
+
+
+        async void Blink()
+        {
+            await Flashlight.TurnOnAsync();
+            await Task.Delay(100);
+            await Flashlight.TurnOffAsync();
         }
 
         public void inGame(int butt)

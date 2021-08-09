@@ -24,6 +24,7 @@
             <Label Text="Результат"   Grid.Column="0" TextColor="Blue"/>
             <Label x:Name="Label_result" Text=""  Grid.Column="1" TextColor="Blue"/>
             <Button x:Name ="Button5" BackgroundColor="Red" Grid.Row="2" Grid.ColumnSpan="2" Text="Начать" />
+            <Button x:Name ="Button6" BackgroundColor="CornflowerBlue" Grid.Row="3" Grid.ColumnSpan="2" Text="blink" />
         </Grid>
     </StackLayout>
 
