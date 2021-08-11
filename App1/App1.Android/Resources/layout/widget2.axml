@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#f5f5f5"
+    android:id="@+id/widgetBackground"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="72dip"
+        android:layout_height="fill_parent">
+        <ImageView
+            android:id="@+id/widgetAnnouncementIcon"
+            android:src="@drawable/andr"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_marginLeft="15dip"
+            android:layout_marginTop="20dip" />
+    </RelativeLayout>
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="216dip"
+		android:layout_height="match_parent">
+		<TextView
+			android:id="@+id/widgetMedium"
+			android:text="HelloAppWidget"
+			android:textColor="#003082"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp" />
+		<TextView
+			android:id="@+id/widgetSmall"
+			android:text="Last refresh: 00:00"
+			android:textColor="#003082"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp" />
+		<Button
+			android:id="@+id/butonWidg"
+			android:background="@android:color/holo_purple"
+			android:layout_width="130.5dp"
+			android:layout_height="wrap_content"
+			android:text="push"
+			android:textColor="@android:color/black"
+			android:layout_marginRight="0.0dp" 
+			/>
+	</LinearLayout>
+</LinearLayout>
