@@ -28,7 +28,6 @@ namespace App1.Droid
 
         public static AppWidgetManager appWidget;
         public int[] _appWidgetIds;
-
         public override void OnUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
         {
             //Update Widget layout
@@ -42,7 +41,7 @@ namespace App1.Droid
 
 
             widgetView.SetOnClickPendingIntent(Resource.Id.butonWid, GetPendingSelfIntent(context, ACTION_WIDGET_TURNON));
-            widgetView.SetOnClickPendingIntent(Resource.Id.butonWid2, GetPendingSelfIntent(context, butonWid2));
+            //widgetView.SetOnClickPendingIntent(Resource.Id.butonWid2, GetPendingSelfIntent(context, butonWid2));
             var me = new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class)).Name);
             appWidgetManager.UpdateAppWidget(me, widgetView);
         }
@@ -94,7 +93,15 @@ namespace App1.Droid
                 Toast.MakeText(context, "god god gooood", ToastLength.Short).Show();
                 SetTextViewText(widgetView);
                 var me = new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class)).Name);
-                appWidget.UpdateAppWidget(me, widgetView);
+
+                if (appWidget == null)
+                {
+                    UpdateAppWidget(context);
+                }
+                else
+                {
+                    appWidget.UpdateAppWidget(me, widgetView);
+                }
                 //UpdateAppWidget(context);
             }
             if (butonWid2.Equals(intent.Action))
@@ -104,14 +111,14 @@ namespace App1.Droid
             }
         }
 
-        //static public void UpdateAppWidget(Context context)
-        //{
-        //    Intent intent = new Intent(context, typeof(my_widget_class));
-        //    intent.SetAction(update);
-        //    int[] ids = AppWidgetManager.GetInstance(context).GetAppWidgetIds(new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class))));
-        //    intent.PutExtra(AppWidgetManager.ExtraAppwidgetIds, ids);
-        //    context.SendBroadcast(intent);
-        //}
+        static public void UpdateAppWidget(Context context)
+        {
+            Intent intent = new Intent(context, typeof(my_widget_class));
+            intent.SetAction(update);
+            int[] ids = AppWidgetManager.GetInstance(context).GetAppWidgetIds(new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class))));
+            intent.PutExtra(AppWidgetManager.ExtraAppwidgetIds, ids);
+            context.SendBroadcast(intent);
+        }
 
         //public my_widget_class()
         //{
