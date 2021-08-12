@@ -17,19 +17,34 @@ namespace App1.Droid
     [BroadcastReceiver(Label = "Widget Button Click")]
     [IntentFilter(new string[] { "android.appwidget.action.APPWIDGET_UPDATE" })]
     [IntentFilter(new string[] { "com.companyname.App1.ACTION_WIDGET_TURNON" })]
+    [IntentFilter(new string[] { "com.companyname.App1.butonWid2" })]
     [MetaData("android.appwidget.provider", Resource = "@xml/my_widget_provider")]
 
     public class my_widget_class : AppWidgetProvider
     {
         public static String ACTION_WIDGET_TURNON = "Button 1 click";
+        public static String butonWid2 = "butonWid2";
         public static String update = "android.appwidget.action.APPWIDGET_UPDATE";
+
+        public static AppWidgetManager appWidget;
+        public int[] _appWidgetIds;
+
         public override void OnUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
         {
             //Update Widget layout
             //Run when create widget or meet update time
 
+            //var me = new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class)).Name);
+            appWidget = appWidgetManager;
+            _appWidgetIds = appWidgetIds;
+
+            var widgetView = new RemoteViews(context.PackageName, Resource.Layout.my_widget);
+
+
+            widgetView.SetOnClickPendingIntent(Resource.Id.butonWid, GetPendingSelfIntent(context, ACTION_WIDGET_TURNON));
+            widgetView.SetOnClickPendingIntent(Resource.Id.butonWid2, GetPendingSelfIntent(context, butonWid2));
             var me = new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class)).Name);
-            appWidgetManager.UpdateAppWidget(me, BuildRemoteViews(context, appWidgetIds));
+            appWidgetManager.UpdateAppWidget(me, widgetView);
         }
 
         private RemoteViews BuildRemoteViews(Context context, int[] appWidgetIds)
@@ -41,7 +56,7 @@ namespace App1.Droid
             SetTextViewText(widgetView);
 
             //Handle click event of button on Widget
-            RegisterClicks(context, appWidgetIds, widgetView);
+            //RegisterClicks(context, appWidgetIds, widgetView);
 
             return widgetView;
         }
@@ -53,12 +68,13 @@ namespace App1.Droid
 
         private void RegisterClicks(Context context, int[] appWidgetIds, RemoteViews widgetView)
         {
-            var intent = new Intent(context, typeof(my_widget_class));
-            intent.SetAction(AppWidgetManager.ActionAppwidgetUpdate);
-            intent.PutExtra(AppWidgetManager.ExtraAppwidgetIds, appWidgetIds);
+            //var intent = new Intent(context, typeof(my_widget_class));
+            //intent.SetAction(AppWidgetManager.ActionAppwidgetUpdate);
+            //intent.PutExtra(AppWidgetManager.ExtraAppwidgetIds, appWidgetIds);
 
             //Button
-            widgetView.SetOnClickPendingIntent(Resource.Id.butonWid, GetPendingSelfIntent(context, ACTION_WIDGET_TURNON));
+            //widgetView.SetOnClickPendingIntent(Resource.Id.butonWid, GetPendingSelfIntent(context, ACTION_WIDGET_TURNON));
+            //widgetView.SetOnClickPendingIntent(Resource.Id.butonWid2, GetPendingSelfIntent(context, butonWid2));
         }
 
         private PendingIntent GetPendingSelfIntent(Context context, string action)
@@ -72,24 +88,38 @@ namespace App1.Droid
         {
             base.OnReceive(context, intent);
             var widgetView = new RemoteViews(context.PackageName, Resource.Layout.my_widget);
-
-            // Check if the click is from the "ACTION_WIDGET_TURNOFF or ACTION_WIDGET_TURNON" button
+            //Check if the click is from the "ACTION_WIDGET_TURNOFF or ACTION_WIDGET_TURNON" button
             if (ACTION_WIDGET_TURNON.Equals(intent.Action))
             {
                 Toast.MakeText(context, "god god gooood", ToastLength.Short).Show();
                 SetTextViewText(widgetView);
-                UpdateAppWidget(context);
+                var me = new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class)).Name);
+                appWidget.UpdateAppWidget(me, widgetView);
+                //UpdateAppWidget(context);
+            }
+            if (butonWid2.Equals(intent.Action))
+            {
+                Toast.MakeText(context, "butt 2 work!!!!!", ToastLength.Short).Show();
+                //UpdateAppWidget(context);
             }
         }
 
-        static public void UpdateAppWidget(Context context)
-        {
-            Intent intent = new Intent(context, typeof(my_widget_class));
-            intent.SetAction(update);
-            int[] ids = AppWidgetManager.GetInstance(context).GetAppWidgetIds(new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class))));
-            intent.PutExtra(AppWidgetManager.ExtraAppwidgetIds, ids);
-            context.SendBroadcast(intent);
-        }
+        //static public void UpdateAppWidget(Context context)
+        //{
+        //    Intent intent = new Intent(context, typeof(my_widget_class));
+        //    intent.SetAction(update);
+        //    int[] ids = AppWidgetManager.GetInstance(context).GetAppWidgetIds(new ComponentName(context, Java.Lang.Class.FromType(typeof(my_widget_class))));
+        //    intent.PutExtra(AppWidgetManager.ExtraAppwidgetIds, ids);
+        //    context.SendBroadcast(intent);
+        //}
+
+        //public my_widget_class()
+        //{
+        //    //var widgetView = new RemoteViews(context.PackageName, Resource.Layout.my_widget);
+        //    //widgetView.SetOnClickPendingIntent(Resource.Id.butonWid, GetPendingSelfIntent(context, ACTION_WIDGET_TURNON));
+        //    //widgetView.SetOnClickPendingIntent(Resource.Id.butonWid2, GetPendingSelfIntent(context, butonWid2));
+        //}
+
 
     }
 }
